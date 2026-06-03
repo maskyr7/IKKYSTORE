@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IKKY Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* E-WALLET PREMIUM */
+
+.ewallet-title{
+    color:#e53935;
+    margin-bottom:15px;
+    font-size:22px;
+    font-weight:700;
+
+    text-shadow:
+    0 0 12px rgba(229,57,53,.45);
+}
+.wallet-card img{
+
+    width:55px;
+    height:55px;
+    object-fit:contain;
+    margin-bottom:10px;
+
+    filter:
+    drop-shadow(0 0 8px rgba(229,57,53,.45));
+
+    transition:.3s;
+}
+
+.wallet-card:hover img{
+
+    transform:scale(1.12);
+
+    filter:
+    drop-shadow(0 0 18px rgba(229,57,53,.9));
+}
+.ewallet-glass{
+
+    background:
+    rgba(255,255,255,.25);
+
+    backdrop-filter:
+    blur(18px);
+
+    -webkit-backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid rgba(255,255,255,.4);
+
+    border-radius:24px;
+
+    padding:20px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 0 25px rgba(229,57,53,.15),
+    0 15px 35px rgba(0,0,0,.08);
+}
+
+.ewallet-glass::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    right:-100px;
+    top:-100px;
+
+    background:
+    radial-gradient(
+    rgba(229,57,53,.25),
+    transparent);
+
+    pointer-events:none;
+}
+
+.ewallet-input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    margin-top:8px;
+    margin-bottom:18px;
+
+    outline:none;
+
+    background:
+    rgba(255,255,255,.85);
+
+    font-size:15px;
+}
+.wallet-card.active{
+
+    border:2px solid #e53935;
+
+    box-shadow:
+    0 0 15px rgba(229,57,53,.45),
+    0 0 35px rgba(229,57,53,.25),
+    inset 0 0 15px rgba(229,57,53,.08);
+}
+.wallet-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:12px;
+}
+
+.wallet-card{
+
+    background:
+    rgba(255,255,255,.65);
+
+    border-radius:18px;
+
+    padding:18px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    border:
+    1px solid rgba(255,255,255,.4);
+}
+
+.wallet-card:hover{
+
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 0 25px rgba(229,57,53,.4);
+
+    border-color:
+    #e53935;
+}
+
+.wallet-card.active{
+
+    box-shadow:
+    0 0 25px rgba(229,57,53,.45);
+
+    border:
+    2px solid #e53935;
+}
+
+.wallet-card img{
+
+    width:55px;
+    height:55px;
+
+    object-fit:contain;
+
+    margin-bottom:10px;
+
+    transition:.3s;
+}
+
+.wallet-card:hover img{
+
+    transform:
+    scale(1.1);
+}
+
+.wallet-card span{
+
+    display:block;
+
+    font-weight:600;
+
+    color:#333;
+}
+
+.nominal-title{
+
+    margin-top:20px;
+    margin-bottom:12px;
+
+    color:#444;
+}
+
+.nominal-grid-ewallet{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:10px;
+}
+
+.nominal-grid-ewallet button{
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    background:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.nominal-grid-ewallet button:hover{
+
+    background:#e53935;
+
+    color:white;
+
+    box-shadow:
+    0 0 20px rgba(229,57,53,.45);
+}
+.nominal-card.active{
+
+    background:#e53935;
+
+    color:#fff;
+
+    border-color:#e53935;
+
+    box-shadow:
+    0 0 15px rgba(229,57,53,.55),
+    0 0 30px rgba(229,57,53,.35);
+}
+.ewallet-buy{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:white;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ff5b5b,
+    #e53935);
+
+    box-shadow:
+    0 0 25px rgba(229,57,53,.45);
+}
+
+.ewallet-buy:hover{
+
+    transform:
+    translateY(-2px);
+
+    box-shadow:
+    0 0 35px rgba(229,57,53,.65);
+}
+.section-title{
+    margin-bottom:15px;
+    color:#e53935;
+    font-weight:700;
+    text-shadow:
+    0 0 10px rgba(229,57,53,.4);
+}
+
+.pulsa-box{
+    background:#fff;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.pulsa-input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    margin-top:8px;
+    margin-bottom:15px;
+    font-size:15px;
+}
+
+.nominal-title{
+    margin-bottom:12px;
+    color:#444;
+}
+
+.nominal-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.nominal-card{
+    border:none;
+    background:#fff5f5;
+    border:2px solid #ffdddd;
+    padding:15px;
+    border-radius:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.nominal-card:hover{
+    transform:translateY(-3px);
+    background:#e53935;
+    color:white;
+    box-shadow:
+    0 0 20px rgba(229,57,53,.45);
+}
+
+.buy-btn{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(
+        135deg,
+        #ff4d4d,
+        #e53935
+    );
+    color:white;
+    font-weight:700;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:
+    0 0 20px rgba(229,57,53,.45);
+}
+:root{
+ --primary:#e53935;
+ --primary-dark:#c62828;
+ --bg:#f5f5f5;
+ --card:#ffffff;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:'Poppins',sans-serif;
+}
+
+body{
+ background:var(--bg);
+}
+
+/* HEADER */
+.header{
+ background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+ color:white;
+ padding:15px;
+ position:sticky;
+ top:0;
+ z-index:999;
+}
+
+.logo{
+ font-size:24px;
+ font-weight:700;
+}
+
+.search{
+ margin-top:10px;
+}
+
+.search input{
+ width:100%;
+ padding:12px;
+ border:none;
+ border-radius:12px;
+}
+
+/* WALLET */
+.wallet{
+ margin:15px;
+ background:white;
+ border-radius:18px;
+ padding:20px;
+ box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.wallet h2{
+    font-size:16px;
+}
+
+.balance{
+    font-size:18px;
+}
+.wallet{
+    margin:10px 15px;
+    padding:12px 15px;
+}
+.btn{
+ border:none;
+ padding:12px 18px;
+ border-radius:10px;
+ cursor:pointer;
+ font-weight:600;
+}
+.deposit{
+    padding:10px 14px;
+    font-size:14px;
+}
+/* MENU */
+.menu{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
+ padding:15px;
+}
+
+.menu-item{
+ background:white;
+ padding:15px;
+ text-align:center;
+ border-radius:15px;
+}
+
+/* PRODUK */
+.section{
+ padding:15px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+}
+
+.card{
+ background:white;
+ border-radius:16px;
+ overflow:hidden;
+ box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.card img{
+ width:100%;
+ height:100px;
+ object-fit:cover;
+}
+
+.card p{
+ text-align:center;
+ padding:10px;
+ font-weight:600;
+}
+
+/* CRYPTO */
+.crypto-card{
+ margin:15px;
+ background:white;
+ border-radius:18px;
+ padding:20px;
+ text-align:center;
+}
+
+.trade-btn{
+ display:inline-block;
+ margin-top:15px;
+ background:var(--primary);
+ color:white;
+ text-decoration:none;
+ padding:12px 25px;
+ border-radius:12px;
+}
+
+/* QR MODAL */
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.7);
+ justify-content:center;
+ align-items:center;
+ z-index:9999;
+}
+
+.modal-content{
+ background:white;
+ width:90%;
+ max-width:400px;
+ border-radius:20px;
+ padding:20px;
+ text-align:center;
+}
+
+.modal-content img{
+ width:100%;
+ border-radius:10px;
+}
+
+/* NAV */
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ width:100%;
+ background:white;
+ display:flex;
+ justify-content:space-around;
+ padding:10px;
+ box-shadow:0 -2px 10px rgba(0,0,0,.1);
+}
+.game-categories{
+    display:flex;
+    overflow:auto;
+    gap:10px;
+    padding:15px;
+}
+
+.game-item{
+    white-space:nowrap;
+    padding:12px 18px;
+    background:white;
+    border-radius:999px;
+    font-weight:600;
+}
+
+.game-item.active{
+    background:#e53935;
+    color:white;
+}
+.promo-banner{
+    margin:15px;
+    padding:25px;
+    border-radius:24px;
+    color:#fff;
+    background:linear-gradient(135deg,#e53935,#ff7043);
+    box-shadow:0 0 30px rgba(229,57,53,.3);
+}
+
+.topup-form,
+.checkout-box,
+.history-box{
+    margin:15px;
+    background:#fff;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.topup-form label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.topup-form input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.payment-methods{
+    margin:15px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.pay-card{
+    background:#fff;
+    padding:18px;
+    border-radius:16px;
+    text-align:center;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.pay-card:hover{
+    background:#e53935;
+    color:white;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+}
+
+.total{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+    font-size:18px;
+    font-weight:700;
+    color:#e53935;
+}
+
+.history-item{
+    padding:15px;
+    margin-top:10px;
+    border-radius:12px;
+    background:#fafafa;
+}
+.footer{
+    margin-top:14px;
+    padding:14px 8px 15px;
+    text-align:center;
+    background:#fff;
+    border-top-left-radius:25px;
+    border-top-right-radius:25px;
+    box-shadow:0 -5px 20px rgba(0,0,0,.08);
+}
+
+.footer h3{
+    color:#e53935;
+    font-size:7px;
+    font-weight:700;
+    margin-bottom:6px;
+    text-shadow:
+    0 0 12px rgba(229,57,53,.35);
+}
+
+.footer p{
+    color:#666;
+    font-size:6px;
+    line-height:1.6;
+}
+
+.footer-links{
+    margin:6px 0;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.footer-links a{
+    color:#e53935;
+    text-decoration:none;
+    font-weight:400;
+}
+
+.footer-links a:hover{
+    text-shadow:
+    0 0 6px rgba(229,57,53,.5);
+}
+
+.copyright{
+    margin-top:8px;
+    font-size:6px;
+    color:#999;
+}
+</style>
+</head>
+
+<body>
+
+<div id="homePage">
+
+<div class="header">
+ <div class="logo">IKKY STORE</div>
+
+ <div class="search">
+  <input type="text" placeholder="Cari produk...">
+ </div>
+</div>
+
+<div class="wallet">
+ <h2>Saldo Saya</h2>
+ <div class="balance">Rp 100.000.000</div>
+
+ <button class="btn deposit" onclick="openQR()">
+  + Deposit Saldo
+ </button>
+</div>
+
+<div class="menu">
+
+<div class="menu-item"
+onclick="showPage('gamePage')">
+🎮<br>Game
+</div>
+
+<div class="menu-item"
+onclick="showPage('ewalletPage')">
+💳<br>E-Wallet
+</div>
+
+<div class="menu-item"
+onclick="showPage('pulsaPage')">
+📱<br>Pulsa
+</div>
+
+<div class="menu-item"
+onclick="showPage('cryptoPage')">
+₿<br>Crypto
+</div>
+
+</div>
+<div class="promo-banner">
+
+    <h2>🔥 Promo Top Up Hari Ini</h2>
+
+    <p>
+        Cashback hingga 5% untuk semua
+        top up Mobile Legends & Free Fire
+    </p>
+
+</div>
+</div> <!-- TUTUP homePage -->
+<div id="gamePage" style="display:none">
+
+<div class="game-categories">
+
+    <div class="game-item active">
+        🎮 Mobile Legends
+    </div>
+
+    <div class="game-item">
+        🔥 Free Fire
+    </div>
+
+    <div class="game-item">
+        🪖 PUBG Mobile
+    </div>
+
+    <div class="game-item">
+        ⚔ Valorant
+    </div>
+</div> <!-- game-categories -->
+<div class="topup-form">
+
+    <label>User ID</label>
+
+    <input
+        id="userId"
+        type="text"
+        placeholder="Masukkan User ID">
+
+    <label>Zone ID</label>
+
+    <input
+        id="zoneId"
+        type="text"
+        placeholder="Masukkan Zone ID">
+
+</div>
+<div class="payment-methods">
+
+<div class="pay-card"
+onclick="selectPayment(this,'Saldo IKKY')">
+💰 Saldo IKKY
+</div>
+
+<div class="pay-card"
+onclick="selectPayment(this,'DANA')">
+📱 DANA
+</div>
+
+<div class="pay-card"
+onclick="selectPayment(this,'OVO')">
+💳 OVO
+</div>
+
+<div class="pay-card"
+onclick="selectPayment(this,'QRIS')">
+⚡ QRIS
+</div>
+
+</div>
+<div class="checkout-box">
+
+    <h3>Ringkasan Pesanan</h3>
+
+    <div class="summary-row">
+        <span>Produk</span>
+        <span id="summaryProduct">
+            -
+        </span>
+    </div>
+
+    <div class="summary-row">
+        <span>Harga</span>
+        <span id="summaryPrice">
+            Rp0
+        </span>
+    </div>
+
+    <div class="summary-row total">
+        <span>Total</span>
+        <span id="summaryTotal">
+            Rp0
+        </span>
+    </div>
+
+    <button
+class="buy-btn"
+onclick="buyProduct()">
+⚡ Beli Sekarang
+</button>
+
+</div>
+
+<div class="section">
+
+<h2 class="ewallet-title">
+🎮 Top Up Game
+</h2>
+
+<div class="ewallet-glass">
+
+<label>User ID</label>
+
+<input
+type="text"
+class="ewallet-input"
+placeholder="Masukkan User ID">
+
+<label>Zone ID (MLBB)</label>
+
+<input
+type="text"
+class="ewallet-input"
+placeholder="Masukkan Zone ID">
+
+<label>Pilih Game</label>
+
+<div class="wallet-grid">
+
+<div class="wallet-card active">
+<img src="mlbb.png">
+<span>Mobile Legends</span>
+</div>
+
+<div class="wallet-card">
+<img src="ff.png">
+<span>Free Fire</span>
+</div>
+
+<div class="wallet-card">
+<img src="pubg.png">
+<span>PUBG Mobile</span>
+</div>
+
+<div class="wallet-card">
+<img src="valorant.png">
+<span>Valorant</span>
+</div>
+
+</div>
+
+<h3 class="nominal-title">
+💎 Pilih Nominal
+</h3>
+
+<div class="nominal-grid">
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','86 Diamond',22000)">
+        86 Diamond
+        <br>
+        Rp22.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','172 Diamond',43000)">
+        172 Diamond
+        <br>
+        Rp43.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','257 Diamond',64000)">
+        257 Diamond
+        <br>
+        Rp64.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','344 Diamond',85000)">
+        344 Diamond
+        <br>
+        Rp85.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','Weekly Pass',29000)">
+        Weekly Pass
+        <br>
+        Rp29.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Mobile Legends','Starlight',149000)">
+        Starlight
+        <br>
+        Rp149.000
+    </button>
+
+</div>
+
+<button
+class="buy-btn"
+onclick="buyProduct()">
+⚡ Beli Sekarang
+</button>
+</div> <!-- tutup ewallet-glass -->
+</div> <!-- tutup section -->
+</div> <!-- gamePage -->
+<div id="historyPage" style="display:none">
+
+<div class="history-box">
+
+    <h2>📄 Riwayat Transaksi</h2>
+
+    <div id="historyList">
+
+        <div class="history-item">
+
+            <b>Mobile Legends 86 Diamond</b>
+
+            <p>Rp22.000</p>
+
+            <small>
+                Berhasil
+            </small>
+        </div>
+
+    </div>
+
+</div>
+</div> <!-- historyPage -->
+<div id="pulsaPage" style="display:none">
+
+<div class="section">
+
+<h2 class="section-title">
+📱 Top Up Pulsa
+    </h2>
+
+    <div class="pulsa-box">
+
+        <label>Nomor Handphone</label>
+        <input
+            type="tel"
+            placeholder="08xxxxxxxxxx"
+            class="pulsa-input">
+
+        <label>Operator</label>
+        <input
+            type="text"
+            value="Otomatis Terdeteksi"
+            readonly
+            class="pulsa-input">
+
+        <h3 class="nominal-title">
+            Pilih Nominal
+        </h3>
+
+        <div class="nominal-grid">
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Pulsa','Pulsa 5.000',5000)">
+        Rp 5.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Pulsa','Pulsa 10.000',10000)">
+        Rp 10.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Pulsa','Pulsa 20.000',20000)">
+        Rp 20.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Pulsa','Pulsa 25.000',25000)">
+        Rp 25.000
+    </button>
+
+    <button
+    class="nominal-card"
+    onclick="selectNominal('Pulsa','Pulsa 50.000',50000)">
+        Rp 50.000
+    </button>
+
+    <button
+class="nominal-card"
+onclick="selectNominal('Pulsa','Pulsa 100.000',100000)">
+Rp 100.000
+</button>
+
+</div>
+
+<button
+class="buy-btn"
+onclick="buyProduct()">
+⚡ Beli Sekarang
+</button>
+
+</div>
+</div> <!-- pulsaPage -->
+</div> 
+
+<div id="ewalletPage" style="display:none">
+
+<div class="section">
+
+    <h2 class="ewallet-title">
+        💳 Top Up E-Wallet
+    </h2>
+
+    <div class="ewallet-glass">
+
+        <label>Nomor E-Wallet</label>
+
+        <input
+            type="tel"
+            class="ewallet-input"
+            placeholder="08xxxxxxxxxx">
+
+        <label>Pilih E-Wallet</label>
+
+        <div class="wallet-grid">
+
+            <div class="wallet-card active">
+                <img src="gopay.png">
+                <span>GoPay</span>
+            </div>
+
+            <div class="wallet-card">
+                <img src="dana.png">
+                <span>DANA</span>
+            </div>
+
+            <div class="wallet-card">
+                <img src="ovo.png">
+                <span>OVO</span>
+            </div>
+
+            <div class="wallet-card">
+                <img src="shopeepay.png">
+                <span>ShopeePay</span>
+            </div>
+
+        </div>
+
+        <h3 class="nominal-title">
+            Pilih Nominal
+        </h3>
+
+        <div class="nominal-grid-ewallet">
+
+<button
+class="nominal-card"
+onclick="selectNominal('E-Wallet','Top Up 10K',10000)">
+10K
+</button>
+
+<button
+onclick="selectNominal('E-Wallet','Top Up 20K',20000)">
+20K
+</button>
+
+<button
+onclick="selectNominal('E-Wallet','Top Up 50K',50000)">
+50K
+</button>
+
+<button
+onclick="selectNominal('E-Wallet','Top Up 100K',100000)">
+100K
+</button>
+
+<button
+onclick="selectNominal('E-Wallet','Top Up 200K',200000)">
+200K
+</button>
+
+<button
+onclick="selectNominal('E-Wallet','Top Up 500K',500000)">
+500K
+</button>
+
+</div>
+
+        <button
+class="ewallet-buy"
+onclick="buyProduct()">
+⚡ Top Up Sekarang
+</button>
+
+    </div>
+
+</div>
+</div> <!-- ewalletPage -->
+
+<div class="modal" id="qrModal">
+ <div class="modal-content">
+
+    <h2>Deposit Saldo</h2>
+
+    <input
+        type="number"
+        id="depositAmount"
+        placeholder="Masukkan nominal deposit"
+        min="1000"
+        style="
+        width:100%;
+        padding:12px;
+        border:1px solid #ddd;
+        border-radius:10px;
+        margin-bottom:15px;
+        ">
+
+    <img src="qris.png" alt="QRIS">
+
+    <p style="margin-top:10px">
+        Scan QRIS lalu lakukan pembayaran sesuai nominal yang diinput.
+    </p>
+
+    <div id="depositInfo"></div>
+
+    <br>
+
+    <button
+class="btn deposit"
+onclick="createDeposit()">
+Saya Sudah Bayar
+</button>
+
+    <button
+        class="btn"
+        style="background:#eee;margin-top:10px"
+        onclick="closeQR()">
+        Tutup
+    </button>
+
+</div>
+</div>
+
+<div id="cryptoPage" style="display:none">
+
+<div class="crypto-card">
+ <h2>Crypto Exchange</h2>
+
+ <p>
+ Trading aset crypto secara real-time.
+ </p>
+
+<a
+href="https://ikkyfx.vercel.app/"
+target="_blank"
+class="trade-btn">
+⚡ Masuk Trading
+</a>
+</div>
+</div> <!-- cryptoPage -->
+
+<footer class="footer">
+
+    <h3>IKKY STORE</h3>
+
+    <p>
+        Platform top up game, pulsa, e-wallet,
+        voucher digital dan produk digital lainnya.
+    </p>
+
+    <div class="footer-links">
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Kontak</a>
+    </div>
+
+    <p class="copyright">
+        © 2026 IKKY STORE. All Rights Reserved.
+    </p>
+
+</footer>
+
+<div class="bottom-nav">
+ <div onclick="showPage('homePage')">
+🏠<br>Home
+</div>
+
+<div onclick="showPage('gamePage')">
+📦<br>Produk
+</div>
+
+<div onclick="showPage('homePage')">
+💰<br>Saldo
+</div>
+
+<div onclick="showPage('historyPage')">
+📄<br>Riwayat
+</div>
+
+<div onclick="showPage('homePage')">
+👤<br>Akun
+</div>
+</div>
+<script>
+
+let selectedService = "";
+let selectedProduct = "";
+let selectedPrice = 0;
+let selectedPayment = "";
+
+function selectNominal(service, product, price){
+
+    document
+    .querySelectorAll('.nominal-card')
+    .forEach(btn => btn.classList.remove('active'));
+
+    event.currentTarget.classList.add('active');
+
+    selectedService = service;
+    selectedProduct = product;
+    selectedPrice = price;
+
+    let productEl = document.getElementById("summaryProduct");
+    let priceEl = document.getElementById("summaryPrice");
+    let totalEl = document.getElementById("summaryTotal");
+
+    if(productEl) productEl.innerText = product;
+
+    if(priceEl)
+        priceEl.innerText = "Rp " + price.toLocaleString("id-ID");
+
+    if(totalEl)
+        totalEl.innerText = "Rp " + price.toLocaleString("id-ID");
+}
+function buyProduct(){
+
+    if(!selectedProduct){
+let historyList =
+document.getElementById("historyList");
+
+if(historyList){
+
+    historyList.innerHTML += `
+    <div class="history-item">
+        <b>${selectedProduct}</b>
+        <p>Rp ${selectedPrice.toLocaleString("id-ID")}</p>
+        <small>Berhasil</small>
+    </div>`;
+}
+        alert(
+        "Pilih produk terlebih dahulu"
+        );
+
+        return;
+    }
+
+    if(selectedService !== "E-Wallet" && !selectedPayment){
+   alert("Pilih metode pembayaran");
+   return;
+}
+
+    alert(
+
+        "Layanan : " + selectedService +
+
+        "\nProduk : " + selectedProduct +
+
+        "\nHarga : Rp " +
+        selectedPrice.toLocaleString("id-ID") +
+
+        "\nPembayaran : " +
+        selectedPayment
+
+    );
+
+}
+function openQR(){
+    document.getElementById("qrModal")
+    .style.display = "flex";
+}
+
+function closeQR(){
+    document.getElementById("qrModal")
+    .style.display = "none";
+}
+function selectPayment(element, method){
+
+    selectedPayment = method;
+
+    document
+    .querySelectorAll('.pay-card')
+    .forEach(card=>{
+        card.style.border =
+        '2px solid transparent';
+    });
+
+    element.style.border =
+    '2px solid #e53935';
+}
+document.querySelectorAll('.game-item')
+.forEach(item => {
+
+    item.addEventListener('click', () => {
+
+        document
+        .querySelectorAll('.game-item')
+        .forEach(i => i.classList.remove('active'));
+
+        item.classList.add('active');
+
+    });
+
+});
+function showPage(pageId){
+
+ let pages = [
+   "homePage",
+   "gamePage",
+   "ewalletPage",
+   "pulsaPage",
+   "cryptoPage",
+   "historyPage"
+];
+ pages.forEach(id=>{
+   let page=document.getElementById(id);
+
+   if(page){
+      page.style.display="none";
+   }
+ });
+
+ document.getElementById(pageId).style.display="block";
+}
+function createDeposit(){
+
+    let nominal =
+    document.getElementById(
+    'depositAmount'
+    ).value;
+
+    if(!nominal){
+
+        alert(
+        'Masukkan nominal deposit'
+        );
+
+        return;
+    }
+
+    alert(
+        'Membuat invoice QRIS Rp ' +
+        Number(nominal)
+        .toLocaleString('id-ID')
+    );
+
+}
+document.querySelectorAll('#ewalletPage .wallet-card')
+.forEach(card => {
+
+    card.addEventListener('click', () => {
+
+        document
+        .querySelectorAll('#ewalletPage .wallet-card')
+        .forEach(c => c.classList.remove('active'));
+
+        card.classList.add('active');
+    });
+
+});
+</script>
+
+</body>
+</html>
