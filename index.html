@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>IKKY STORE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--primary:#e53935;
+--bg:#f5f6fa;
+--card:#ffffff;
+--text:#222;
+--muted:#888;
+--border:#ececec;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+padding-bottom:90px;
+}
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+/* HEADER */
+
+.header{
+background:#e53935;
+padding:20px;
+color:#fff;
+}
+
+.logo{
+font-size:22px;
+font-weight:800;
+}
+
+.sub{
+font-size:13px;
+opacity:.9;
+margin-top:4px;
+}
+
+/* SALDO */
+
+.balance-card{
+margin:15px;
+background:#fff;
+border-radius:20px;
+padding:20px;
+}
+
+.balance-label{
+font-size:13px;
+color:#888;
+}
+
+.balance-value{
+font-size:28px;
+font-weight:800;
+margin-top:8px;
+}
+
+.action-row{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.action-btn{
+flex:1;
+height:46px;
+border:none;
+border-radius:12px;
+background:#f4f4f4;
+font-weight:600;
+}
+
+/* SEARCH */
+
+.search-box{
+padding:0 15px;
+}
+
+.search-box input{
+width:100%;
+height:52px;
+border:none;
+border-radius:16px;
+padding:0 16px;
+font-size:15px;
+}
+
+/* MENU */
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+padding:15px;
+}
+
+.menu-card{
+background:#fff;
+border-radius:18px;
+padding:20px;
+text-align:center;
+font-size:15px;
+font-weight:700;
+cursor:pointer;
+}
+
+.menu-icon{
+font-size:30px;
+margin-bottom:10px;
+}
+
+/* BANNER */
+
+.banner{
+margin:15px;
+background:#e53935;
+color:white;
+padding:20px;
+border-radius:18px;
+}
+
+.banner h3{
+margin-bottom:8px;
+}
+
+/* SECTION */
+
+.section-title{
+padding:0 15px;
+font-size:18px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.product-list{
+padding:0 15px;
+}
+
+.product{
+background:#fff;
+padding:16px;
+border-radius:16px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.product-price{
+font-weight:700;
+color:#e53935;
+}
+
+/* PULSA */
+
+.form{
+padding:15px;
+}
+
+.input{
+width:100%;
+height:50px;
+border:none;
+border-radius:14px;
+padding:0 15px;
+margin-bottom:12px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:10px;
+}
+
+.nominal{
+background:#fff;
+border:none;
+padding:16px;
+border-radius:14px;
+font-weight:700;
+}
+
+.nominal.active{
+background:#e53935;
+color:white;
+}
+
+/* RIWAYAT */
+
+.history{
+padding:15px;
+}
+
+.history-item{
+background:#fff;
+padding:15px;
+border-radius:16px;
+margin-bottom:12px;
+}
+
+.status{
+font-size:12px;
+font-weight:700;
+color:green;
+margin-top:6px;
+}
+
+/* ACCOUNT */
+
+.profile{
+padding:15px;
+}
+
+.profile-card{
+background:#fff;
+padding:20px;
+border-radius:18px;
+}
+
+.profile-name{
+font-size:20px;
+font-weight:800;
+}
+
+.profile-id{
+color:#888;
+margin-top:5px;
+}
+
+.account-menu{
+margin-top:15px;
+}
+
+.account-btn{
+width:100%;
+height:54px;
+border:none;
+border-radius:14px;
+background:#fff;
+margin-bottom:10px;
+text-align:left;
+padding-left:15px;
+}
+
+/* BOTTOM */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:70px;
+background:white;
+border-top:1px solid #eee;
+display:flex;
+}
+
+.nav-item{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:12px;
+cursor:pointer;
+}
+
+.nav-item.active{
+color:#e53935;
+font-weight:700;
+}
+
+.back-btn{
+margin:15px;
+height:45px;
+padding:0 15px;
+border:none;
+border-radius:12px;
+background:#e53935;
+color:white;
+font-weight:700;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+
+<div id="home" class="page active">
+
+<div class="header">
+<div class="logo">IKKY STORE</div>
+<div class="sub">Top Up Game & Digital Product</div>
+</div>
+
+<div class="balance-card">
+<div class="balance-label">Saldo Anda</div>
+<div class="balance-value">Rp 0</div>
+
+<div class="action-row">
+<button class="action-btn">Top Up</button>
+<button class="action-btn">Transfer</button>
+</div>
+</div>
+
+<div class="search-box">
+<input type="text" placeholder="Cari produk...">
+</div>
+
+<div class="menu-grid">
+
+<div class="menu-card" onclick="openPage('game')">
+<div class="menu-icon">🎮</div>
+Game
+</div>
+
+<div class="menu-card" onclick="openPage('pulsa')">
+<div class="menu-icon">📱</div>
+Pulsa
+</div>
+
+<div class="menu-card" onclick="openPage('ewallet')">
+<div class="menu-icon">💳</div>
+E-Wallet
+</div>
+
+<div class="menu-card" onclick="openPage('deposit')">
+<div class="menu-icon">💰</div>
+Deposit
+</div>
+
+</div>
+
+<div class="banner">
+<h3>Promo Hari Ini</h3>
+<p>Cashback hingga 5% untuk semua transaksi.</p>
+</div>
+
+<div class="section-title">
+Produk Populer
+</div>
+
+<div class="product-list">
+
+<div class="product">
+<span>Mobile Legends</span>
+<span class="product-price">Mulai 5K</span>
+</div>
+
+<div class="product">
+<span>Free Fire</span>
+<span class="product-price">Mulai 5K</span>
+</div>
+
+<div class="product">
+<span>DANA</span>
+<span class="product-price">Mulai 10K</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- GAME -->
+
+<div id="game" class="page">
+
+<button class="back-btn" onclick="openPage('home')">
+← Kembali
+</button>
+
+<div class="section-title">Top Up Game</div>
+
+<div class="product-list">
+
+<div class="product">
+<span>Mobile Legends</span>
+</div>
+
+<div class="product">
+<span>Free Fire</span>
+</div>
+
+<div class="product">
+<span>PUBG Mobile</span>
+</div>
+
+<div class="product">
+<span>Valorant</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- PULSA -->
+
+<div id="pulsa" class="page">
+
+<button class="back-btn" onclick="openPage('home')">
+← Kembali
+</button>
+
+<div class="form">
+
+<input class="input" placeholder="Nomor HP">
+
+<div class="grid">
+
+<button class="nominal">5.000</button>
+<button class="nominal">10.000</button>
+<button class="nominal">25.000</button>
+<button class="nominal">50.000</button>
+<button class="nominal">100.000</button>
+<button class="nominal">150.000</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- EWALLET -->
+
+<div id="ewallet" class="page">
+
+<button class="back-btn" onclick="openPage('home')">
+← Kembali
+</button>
+
+<div class="form">
+
+<input class="input" placeholder="Nomor E-Wallet">
+
+<div class="grid">
+
+<button class="nominal">10K</button>
+<button class="nominal">20K</button>
+<button class="nominal">50K</button>
+<button class="nominal">100K</button>
+<button class="nominal">200K</button>
+<button class="nominal">500K</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DEPOSIT -->
+
+<div id="deposit" class="page">
+
+<button class="back-btn" onclick="openPage('home')">
+← Kembali
+</button>
+
+<div class="product-list">
+
+<div class="product">
+<span>QRIS</span>
+</div>
+
+<div class="product">
+<span>DANA</span>
+</div>
+
+<div class="product">
+<span>OVO</span>
+</div>
+
+<div class="product">
+<span>BANK TRANSFER</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- HISTORY -->
+
+<div id="history" class="page">
+
+<div class="history">
+
+<div class="history-item">
+<div>MLBB 86 Diamond</div>
+<div>Rp22.000</div>
+<div class="status">SUCCESS</div>
+</div>
+
+<div class="history-item">
+<div>DANA 20K</div>
+<div>Rp20.000</div>
+<div class="status">SUCCESS</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- ACCOUNT -->
+
+<div id="account" class="page">
+
+<div class="profile">
+
+<div class="profile-card">
+
+<div class="profile-name">
+Lucky Wahyu Mukti
+</div>
+
+<div class="profile-id">
+Member IKKY STORE
+</div>
+
+</div>
+
+<div class="account-menu">
+
+<button class="account-btn">
+👤 Edit Profil
+</button>
+
+<button class="account-btn">
+🌙 Dark Mode
+</button>
+
+<button class="account-btn">
+📞 WhatsApp Admin
+</button>
+
+<button class="account-btn">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-item active" onclick="nav('home',this)">
+🏠
+<div>Home</div>
+</div>
+
+<div class="nav-item" onclick="nav('history',this)">
+📄
+<div>Riwayat</div>
+</div>
+
+<div class="nav-item" onclick="nav('account',this)">
+👤
+<div>Akun</div>
+</div>
+
+</div>
+
+<script>
+
+function openPage(id){
+
+document
+.querySelectorAll('.page')
+.forEach(p=>p.classList.remove('active'));
+
+document
+.getElementById(id)
+.classList.add('active');
+
+}
+
+function nav(id,el){
+
+openPage(id);
+
+document
+.querySelectorAll('.nav-item')
+.forEach(n=>n.classList.remove('active'));
+
+el.classList.add('active');
+
+}
+
+</script>
+
+</body>
+</html>
