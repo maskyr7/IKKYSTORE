@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IKKY STORE Build 1</title>
+<style>
+:root{--p:#e53935;--bg:#f5f5f5;--card:#fff;--text:#222}
+.dark{--bg:#121212;--card:#1e1e1e;--text:#eee}
+body{margin:0;font-family:Arial;background:var(--bg);color:var(--text)}
+header{background:var(--p);color:#fff;padding:15px}
+nav{display:flex;gap:6px;overflow:auto}
+nav button,button{border:0;background:var(--p);color:#fff;padding:10px;border-radius:8px;cursor:pointer}
+.page{display:none;padding:15px}
+.active{display:block}
+.card{background:var(--card);padding:15px;border-radius:12px;margin:10px 0}
+input,select{width:100%;padding:10px;margin:6px 0;box-sizing:border-box}
+.product{padding:10px;border:1px solid #ccc;border-radius:8px;margin:6px 0;cursor:pointer}
+#toast{position:fixed;bottom:15px;right:15px;background:#222;color:#fff;padding:10px;border-radius:8px;display:none}
+</style>
+</head>
+<body>
+<header>
+<h2>IKKY STORE BUILD 1</h2>
+<nav>
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('game')">Game</button>
+<button onclick="showPage('ewallet')">E-Wallet</button>
+<button onclick="showPage('pulsa')">Pulsa</button>
+<button onclick="showPage('history')">Riwayat</button>
+<button onclick="toggleDark()">Dark</button>
+</nav>
+</header>
+
+<div id="dashboard" class="page active">
+<div class="card">
+<h3>Login / Register</h3>
+<input id="username" placeholder="Username">
+<button onclick="login()">Masuk</button>
+<p id="userInfo">Belum login</p>
+<h3>Saldo: Rp <span id="saldo">0</span></h3>
+<input id="topupSaldo" type="number" placeholder="Tambah saldo simulasi">
+<button onclick="addSaldo()">Tambah Saldo</button>
+</div>
+
+<div class="card">
+<h3>Search Produk</h3>
+<input id="search" oninput="renderSearch()" placeholder="Cari produk...">
+<div id="searchResult"></div>
+</div>
+</div>
+
+<div id="game" class="page">
+<div class="card">
+<h3>Top Up Game</h3>
+<select id="gameProduct"></select>
+<button onclick="buy('game')">Beli</button>
+</div>
+</div>
+
+<div id="ewallet" class="page">
+<div class="card">
+<h3>Top Up E-Wallet</h3>
+<select id="ewalletProduct"></select>
+<button onclick="buy('ewallet')">Top Up</button>
+</div>
+</div>
+
+<div id="pulsa" class="page">
+<div class="card">
+<h3>Pulsa</h3>
+<select id="pulsaProduct"></select>
+<button onclick="buy('pulsa')">Beli Pulsa</button>
+</div>
+</div>
+
+<div id="history" class="page">
+<div class="card">
+<h3>Riwayat Transaksi</h3>
+<div id="historyList"></div>
+</div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const db={
+game:[
+{name:"ML 86 Diamond",price:22000},
+{name:"ML Weekly Pass",price:29000},
+{name:"FF 70 Diamond",price:10000},
+{name:"PUBG 60 UC",price:15000}
+],
+ewallet:[
+{name:"DANA 10K",price:10000},
+{name:"OVO 20K",price:20000},
+{name:"GoPay 50K",price:50000}
+],
+pulsa:[
+{name:"Pulsa 5K",price:5000},
+{name:"Pulsa 10K",price:10000},
+{name:"Pulsa 50K",price:50000}
+]
+};
+
+let saldo=Number(localStorage.getItem("saldo")||50000);
+let historyData=JSON.parse(localStorage.getItem("history")||"[]");
+
+function toast(t){
+ let x=document.getElementById("toast");
+ x.innerText=t;x.style.display="block";
+ setTimeout(()=>x.style.display="none",2000);
+}
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+}
+
+function login(){
+ let u=document.getElementById("username").value.trim();
+ if(!u)return toast("Isi username");
+ localStorage.setItem("user",u);
+ document.getElementById("userInfo").innerText="Login: "+u;
+ toast("Login berhasil");
+}
+
+function addSaldo(){
+ let n=Number(document.getElementById("topupSaldo").value||0);
+ saldo+=n; save();
+}
+
+function save(){
+ localStorage.setItem("saldo",saldo);
+ localStorage.setItem("history",JSON.stringify(historyData));
+ document.getElementById("saldo").innerText=saldo.toLocaleString("id-ID");
+ renderHistory();
+}
+
+function fill(){
+ ["game","ewallet","pulsa"].forEach(cat=>{
+  let el=document.getElementById(cat+"Product");
+  db[cat].forEach(p=>{
+   let o=document.createElement("option");
+   o.value=JSON.stringify(p);
+   o.textContent=p.name+" - Rp "+p.price.toLocaleString("id-ID");
+   el.appendChild(o);
+  });
+ });
+}
+
+function buy(cat){
+ let p=JSON.parse(document.getElementById(cat+"Product").value);
+ if(saldo<p.price)return toast("Saldo kurang");
+ saldo-=p.price;
+ historyData.unshift({
+   name:p.name,price:p.price,time:new Date().toLocaleString("id-ID")
+ });
+ save();
+ toast("Transaksi berhasil");
+}
+
+function renderHistory(){
+ document.getElementById("historyList").innerHTML=historyData.map(h=>
+ `<div class="product"><b>${h.name}</b><br>Rp ${h.price.toLocaleString('id-ID')}<br>${h.time}</div>`
+ ).join("");
+}
+
+function renderSearch(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let all=[...db.game,...db.ewallet,...db.pulsa];
+ document.getElementById("searchResult").innerHTML=all
+ .filter(x=>x.name.toLowerCase().includes(q))
+ .map(x=>`<div class="product">${x.name} - Rp ${x.price.toLocaleString('id-ID')}</div>`)
+ .join("");
+}
+
+function toggleDark(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("dark",document.body.classList.contains("dark"));
+}
+
+if(localStorage.getItem("dark")==="true")document.body.classList.add("dark");
+let u=localStorage.getItem("user");
+if(u)document.getElementById("userInfo").innerText="Login: "+u;
+
+fill(); save(); renderSearch();
+</script>
+</body>
+</html>
