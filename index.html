@@ -1429,7 +1429,7 @@ window.uploadBuktiTransfer = async function(){
 
    return url;
 }
-async function loadRiwayat(){
+window.loadRiwayat = async function(){
 
    const uid = auth.currentUser.uid;
 
@@ -1545,7 +1545,7 @@ const auth = getAuth(app);
 window.auth = auth;
 const storage = getStorage(app);
 window.logoutUser = async function(){
-window.auth = auth;
+
    await signOut(auth);
 document.getElementById("userNama").innerText = "-";
 document.getElementById("userEmail").innerText = "-";
@@ -1664,6 +1664,11 @@ onAuthStateChanged(auth, async(user)=>{
    }
 
 });
+</script>
+<script>
+window.onerror = function(msg, url, line, col, error) {
+  alert("ERROR:\n" + msg + "\nBaris: " + line);
+};
 </script>
 </body>
 </html>
