@@ -1145,15 +1145,24 @@ paymentInfo.innerHTML = "";
 }
 window.sendOrderWA = async function(){
 
-alert("sendOrderWA jalan");
+   alert("sendOrderWA jalan");
 
-// isi fungsi...
-}
-if(!window.auth.currentUser){
-   alert("Silakan login terlebih dahulu");
-   openPage("account");
-   return;
-}
+   if(!window.auth.currentUser){
+      alert("Silakan login terlebih dahulu");
+      openPage("account");
+      return;
+   }
+
+   const metode =
+   document.getElementById("paymentMethod").value;
+
+   if(!metode){
+      alert("Pilih metode pembayaran");
+      return;
+   }
+
+   // seluruh kode WA di sini ...
+
 const metode =
 document.getElementById("paymentMethod").value;
 
@@ -1232,7 +1241,7 @@ document.getElementById("paymentInfo").innerHTML = "";
 document.getElementById("buktiTransfer").value = "";
 document.getElementById("namaFile").innerText =
 "Belum ada file dipilih";
-}
+
 function openPage(id){
 
 document
@@ -1334,7 +1343,7 @@ file ? file.name : "Belum ada file dipilih";
 
 }
 
-function nav(id,el){
+window.nav = function(id,el){
 
 openPage(id);
 
