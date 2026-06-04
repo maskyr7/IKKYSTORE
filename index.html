@@ -751,30 +751,6 @@ Belum ada transaksi
 </p>
 <hr style="margin:15px 0;">
 
-<h3>Metode Pembayaran</h3>
-
-<div class="product-list">
-
-<div class="product">
-<span>📷 QRIS IKKY STORE</span>
-</div>
-
-<div class="product">
-<span>💳 DANA</span>
-</div>
-
-<div class="product">
-<span>💳 OVO</span>
-</div>
-
-<div class="product">
-<span>🏦 Bank Transfer</span>
-</div>
-
-</div>
-
-<hr style="margin:15px 0;">
-
 <select
 class="input"
 id="paymentMethod"
@@ -811,44 +787,98 @@ Belum ada file dipilih
 
 <div id="account" class="page">
 
-<div class="profile">
+  <!-- LOGIN & DAFTAR -->
+  <div id="loginBox">
 
-<div class="profile-card">
+    <div class="form">
 
-<div class="profile-name">
-Lucky Wahyu Mukti
+      <h2>Masuk ke IKKY STORE</h2>
+
+      <input
+      id="loginEmail"
+      class="input"
+      type="email"
+      placeholder="Email">
+
+      <input
+      id="loginPassword"
+      class="input"
+      type="password"
+      placeholder="Password">
+
+      <button
+      class="action-btn order-btn"
+      onclick="loginUser()">
+      Masuk
+      </button>
+
+      <br><br>
+
+      <h3>Belum punya akun?</h3>
+
+      <input
+      id="registerNama"
+      class="input"
+      placeholder="Nama Lengkap">
+
+      <input
+      id="registerEmail"
+      class="input"
+      type="email"
+      placeholder="Email">
+
+      <input
+      id="registerPassword"
+      class="input"
+      type="password"
+      placeholder="Password">
+
+      <button
+      class="action-btn order-btn"
+      onclick="registerUser()">
+      Daftar
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- PROFIL USER -->
+  <div id="profileBox" style="display:none;">
+
+    <div class="profile">
+
+      <div class="profile-card">
+
+        <div
+        class="profile-name"
+        id="userNama">
+        -
+        </div>
+
+        <div
+        class="profile-id"
+        id="userEmail">
+        -
+        </div>
+
+      </div>
+
+      <div class="account-menu">
+
+        <button
+        class="account-btn"
+        onclick="logoutUser()">
+        🚪 Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
-
-<div class="profile-id">
-Member IKKY STORE
-</div>
-
-</div>
-
-<div class="account-menu">
-
-<button class="account-btn">
-👤 Edit Profil
-</button>
-
-<button class="account-btn">
-🌙 Dark Mode
-</button>
-
-<button class="account-btn">
-📞 WhatsApp Admin
-</button>
-
-<button class="account-btn">
-🚪 Logout
-</button>
-
-</div>
-
-</div>
-
-</div>
-
 <!-- NAV -->
 
 <div class="bottom-nav">
@@ -977,7 +1007,7 @@ let currentOrder = {};
 let selectedService = "";
 let selectedProduct = "";
 let selectedPrice = 0;
-let saldo = 0;
+
 let riwayat =
 JSON.parse(localStorage.getItem("riwayat")) || [];
 
@@ -1166,14 +1196,14 @@ Saya sudah melakukan pembayaran dan mengupload bukti transfer.
 Mohon verifikasi admin.
 
 Terima kasih 🙏`;
-
+await simpanTransaksi(currentOrder);
 window.open(
 "https://wa.me/6288101025016?text="+
 encodeURIComponent(pesan),
 "_blank"
 );
 
-tambahRiwayat(currentOrder);
+await simpanTransaksi(currentOrder);
 
 selectedService = "";
 selectedProduct = "";
@@ -1183,14 +1213,6 @@ document
 .querySelectorAll(".nominal")
 .forEach(btn=>btn.classList.remove("active"));
 }
-function updateSaldo(){
-
-document.querySelector(".balance-value").innerText =
-"Rp " + saldo.toLocaleString("id-ID");
-
-
-}
-
 function openPage(id){
 
 document
@@ -1292,42 +1314,6 @@ localStorage.setItem(
 JSON.stringify(riwayat)
 );
 
-renderRiwayat();
-
-}
-function renderRiwayat(){
-
-const historyList =
-document.getElementById("historyList");
-
-if(riwayat.length === 0){
-
-historyList.innerHTML =
-`
-<div style="text-align:center;color:#888;padding:20px;">
-Belum ada transaksi
-</div>
-`;
-
-return;
-}
-
-historyList.innerHTML = "";
-
-riwayat.forEach(order=>{
-
-historyList.innerHTML += `
-<div class="history-item">
-<div>${order.produk}</div>
-<div>Rp ${order.harga.toLocaleString("id-ID")}</div>
-<div class="status">
-${order.status}
-</div>
-</div>
-`;
-
-});
-
 }
 
 function tampilNamaFile(){
@@ -1351,20 +1337,228 @@ document
 el.classList.add('active');
 
 }
-updateSaldo();
-renderRiwayat();
 </script>
 <script type="module">
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-alert("Firebase script jalan");
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
   getFirestore,
   doc,
-  getDoc
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  addDoc,
+  getDocs,
+  orderBy,
+  query
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+window.loginUser = async function(){
+
+   const email =
+   document.getElementById("loginEmail").value;
+
+   const password =
+   document.getElementById("loginPassword").value;
+
+   try{
+
+      await signInWithEmailAndPassword(
+         auth,
+         email,
+         password
+      );
+
+      alert("Login berhasil");
+
+      openPage("home");
+
+   }catch(err){
+
+      alert(err.message);
+
+   }
+
+}
+async function simpanTransaksi(order){
+
+   const uid = auth.currentUser.uid;
+
+   await addDoc(
+      collection(
+         db,
+         "users",
+         uid,
+         "transactions"
+      ),
+      {
+         ...order,
+         createdAt: Date.now()
+      }
+   );
+
+}
+async function loadRiwayat(){
+
+   if(!auth.currentUser) return;
+
+   const uid = auth.currentUser.uid;
+
+   const q = query(
+      collection(db,"users",uid,"transactions"),
+      orderBy("createdAt","desc")
+   );
+
+   const snap = await getDocs(q);
+
+   let html = "";
+
+   snap.forEach(docItem=>{
+
+      const trx = docItem.data();
+
+      html += `
+      <div class="history-item">
+
+         <b>${trx.produk}</b><br>
+
+         <small>
+         ${trx.tujuan}
+         </small>
+
+         <div>
+         Rp ${trx.harga.toLocaleString("id-ID")}
+         </div>
+
+         <div class="status">
+         ${trx.status}
+         </div>
+
+      </div>
+      `;
+
+   });
+
+   document.getElementById("historyList")
+   .innerHTML =
+   html || `
+   <div style="text-align:center;color:#888;padding:20px;">
+   Belum ada transaksi
+   </div>
+   `;
+}
+async function loadRiwayat(){
+
+   const uid = auth.currentUser.uid;
+
+   const q = query(
+      collection(
+         db,
+         "users",
+         uid,
+         "transactions"
+      ),
+      orderBy("createdAt","desc")
+   );
+
+   const snap = await getDocs(q);
+
+   const box =
+   document.getElementById("historyList");
+
+   box.innerHTML = "";
+
+   snap.forEach((docu)=>{
+
+      const trx = docu.data();
+
+      box.innerHTML += `
+      <div class="history-item">
+         <b>${trx.produk}</b>
+         <div>${trx.tujuan}</div>
+         <div>
+            Rp ${trx.harga.toLocaleString("id-ID")}
+         </div>
+         <div class="status">
+            ${trx.status || "MENUNGGU"}
+         </div>
+      </div>
+      `;
+
+   });
+
+}
+window.registerUser = async function(){
+
+   const nama =
+   document.getElementById("registerNama").value;
+
+   const email =
+   document.getElementById("registerEmail").value;
+
+   const password =
+   document.getElementById("registerPassword").value;
+
+   try{
+
+      const userCredential =
+      await createUserWithEmailAndPassword(
+         auth,
+         email,
+         password
+      );
+
+      const uid =
+      userCredential.user.uid;
+
+      await setDoc(
+         doc(db,"users",uid),
+         {
+            nama:nama,
+            email:email,
+            saldo:0,
+            createdAt:Date.now()
+         }
+      );
+
+      alert("Akun berhasil dibuat");
+
+   }catch(err){
+
+      alert(err.message);
+
+   }
+
+}
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8vxUZzsUduHg4AAJ_EXXQH92WGcurwiY",
@@ -1377,15 +1571,65 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-alert("Firebase connect");
-window.db = db;
+const auth = getAuth(app);
+window.logoutUser = async function(){
 
+   await signOut(auth);
+
+   alert("Logout berhasil");
+
+}
+async function loadProfile(){
+
+   const uid = auth.currentUser.uid;
+
+   const snap =
+   await getDoc(doc(db,"users",uid));
+
+   if(snap.exists()){
+
+      const data = snap.data();
+
+      document.getElementById("userNama")
+      .innerText = data.nama;
+
+      document.getElementById("userEmail")
+      .innerText = data.email;
+
+   }
+
+}
+async function simpanTransaksi(order){
+
+   if(!auth.currentUser) return;
+
+   const uid = auth.currentUser.uid;
+
+   await addDoc(
+      collection(db,"users",uid,"transactions"),
+      {
+         invoice: order.invoice,
+         layanan: order.layanan,
+         produk: order.produk,
+         tujuan: order.tujuan,
+         harga: order.harga,
+         status: order.status || "MENUNGGU VERIFIKASI",
+         createdAt: Date.now()
+      }
+   );
+
+}
 async function loadSaldo() {
 
-  try {
+  if(!auth.currentUser){
+   return;
+}
 
-    const userRef =
-    doc(db, "users", "lucky001");
+   try{
+const uid = auth.currentUser.uid;
+
+const userRef =
+doc(db,"users",uid);
 
     const snap =
     await getDoc(userRef);
@@ -1394,8 +1638,7 @@ async function loadSaldo() {
 
       const data = snap.data();
 
-      document.querySelector(".balance-value")
-      .innerText =
+      document.querySelector(".balance-value").innerText =
       "Rp " + (data.saldo || 0).toLocaleString("id-ID");
 
     } else {
@@ -1411,32 +1654,18 @@ async function loadSaldo() {
   }
 
 }
-try {
 
-  const userRef = doc(db, "users", "lucky001");
+onAuthStateChanged(auth, async(user)=>{
 
-  alert("Mencari dokumen...");
+   if(user){
 
-  const snap = await getDoc(userRef);
+      await loadSaldo();
+      await loadProfile();
+      await loadRiwayat();
+      await loadRiwayat();
+   }
 
-  alert("exists = " + snap.exists());
-
-  if (snap.exists()) {
-    alert(JSON.stringify(snap.data()));
-  }
-
-} catch(e) {
-
-  alert(
-    "ERROR:\n" +
-    e.name +
-    "\n" +
-    e.message
-  );
-
-}
-loadSaldo();
-
+});
 </script>
 </body>
 </html>
