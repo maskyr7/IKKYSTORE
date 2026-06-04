@@ -771,8 +771,8 @@ Belum ada file dipilih
 
     <button
 class="action-btn order-btn"
-onclick="alert('Tombol terklik')">
-  Kirim WA Admin
+onclick="sendOrderWA()">
+Kirim WA Admin
 </button>
 
   </div>
@@ -1141,6 +1141,39 @@ else{
 paymentInfo.innerHTML = "";
 
 }
+}
+window.sendOrderWA = async function(){
+
+   const metode =
+   document.getElementById("paymentMethod").value;
+
+   if(!metode){
+      alert("Pilih metode pembayaran");
+      return;
+   }
+
+   const pesan =
+`*🛒 ORDER BARU | IKKY STORE*
+
+📄 Invoice: ${currentOrder.invoice}
+
+🏷️ Layanan: ${currentOrder.layanan}
+
+📦 Produk: ${currentOrder.produk}
+
+🎯 Tujuan: ${currentOrder.tujuan}
+
+💰 Harga: Rp ${currentOrder.harga.toLocaleString("id-ID")}
+
+💳 Pembayaran: ${metode}
+`;
+
+   window.open(
+      "https://wa.me/62881010250186?text=" +
+      encodeURIComponent(pesan),
+      "_blank"
+   );
+
 }
 window.openPage = function(id){
 
